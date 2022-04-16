@@ -36,10 +36,10 @@ public class SpottingController {
     }
 
     @GetMapping(path = "/spots/{id}")
-    public SpottingDTO getSpot(@PathVariable("id") Long id) throws IOException {
+    public SpottingDTO getSpot(@PathVariable("id") Long id) throws RuntimeException {
         Optional<Spotting> spotOp = spottingService.getSpot(id);
         if(spotOp.isEmpty()) {
-            throw new IOException("Spot with selected id does not exist");
+            throw new RuntimeException("Spot with selected id does not exist");
         } else {
             return modelMapper.map(spotOp.get(), SpottingDTO.class);
         }
@@ -68,17 +68,6 @@ public class SpottingController {
     }
     */
 
-    /*
-    @ExceptionHandler(value={SpotAddException.class})
-    public ResponseEntity<Object> handleSpotAddException(SpotAddException e) {
-
-        return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-
-    }
-    */
-
-
-    //Do testowania frontu
     @CrossOrigin
     @PostMapping(path = "/addspot")
     public SpottingDTO addSpot(@RequestParam("carMake") String carMake,

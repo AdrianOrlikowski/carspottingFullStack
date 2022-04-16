@@ -25,7 +25,7 @@ function sendData()
       alert("Spot successfully added");
     } else {
       let resp = JSON.parse(XHR.responseText);
-      alert(resp);
+      alert(resp.message);
     }
     //go to main page
     window.location.href = "http://localhost:8080"
@@ -34,7 +34,7 @@ function sendData()
 
   //Sending the request
   XHR.open("POST",source);
-  XHR.setRequestHeader("Authorization", "Basic " + btoa("adrian:adrian")); //testing basic http security
+  //XHR.setRequestHeader("Authorization", "Basic " + btoa("adrian:adrian")); //testing basic http security
   XHR.send(FD);
 
 }

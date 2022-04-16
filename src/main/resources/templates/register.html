@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Carspotting Warsaw</title>
+  <title>Registration</title>
 
   <link rel="stylesheet" th:href="@{/css/normalize.css}">
   <link rel="stylesheet" th:href="@{/css/design.css}">
@@ -22,29 +22,25 @@
   <a th:href="@{/logout}">Logout</a>
   <a th:href="@{/register}">Register</a>
 </div>
+
 <div class="footer">
-  <h2>Add spot</h2>
+  <h2>Please register if you want to upload spots</h2>
 </div>
-
 <div>
-  <form class="form">
-    <div class="formInput">
-      <input name="carMake" type="text" placeholder="Car Make" required>
-    </div>
-    <div class="formInput">
-      <input name="carModel" type="text" placeholder="Car Model" required>
-    </div>
-    <div class="formInput">
-      <input name="carPicFile" type="file" required>
-    </div>
+  <form class="form" method="post" action="/users/register">
 
+    <div class="formInput">
+      <input type="text" id="username" name="username"  placeholder="Username" required="" autofocus="">
+    </div>
+    <div class="formInput">
+      <input type="email" id="email" name="email"  placeholder="Email" required="">
+    </div>
+    <div class="formInput">
+      <input type="password" id="password" name="password" placeholder="Password" required="">
+    </div>
+    <button class="button" type="submit">Register</button>
   </form>
 </div>
-<div>
-  <button class="button" id="spotSubmit">Add spot</button>
-</div>
-
-<script th:src="@{js/addspot.js}"></script>
 
 </body>
 

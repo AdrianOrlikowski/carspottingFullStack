@@ -22,20 +22,20 @@ public class UserService implements UserDetailsService{
     public List<AppUser> getUsers() { return userRepo.findAll(); }
 
     public AppUser getUserById(Long userId) {
-        return userRepo.findById(userId).orElseThrow(() -> new IllegalStateException(
+        return userRepo.findById(userId).orElseThrow(() -> new UsernameNotFoundException(
                 "user with id " + userId + " does not exist"));
     }
 
     public AppUser getUserByEmail(String email) {
-        return userRepo.findUserByEmail(email).orElseThrow(() -> new IllegalStateException(
+        return userRepo.findUserByEmail(email).orElseThrow(() -> new UsernameNotFoundException(
                 "user with id " + email + " does not exist"));
     }
 
-    public AppUser AddUser(AppUser newUser) {
+    public AppUser addUser(AppUser newUser) {
         if(userRepo.findUserByEmail(newUser.getEmail()).isPresent()) {
-            throw new IllegalStateException("There is already an account associated with this email.");
+            throw new RuntimeException("There is already an account associated with this email.");
         } else if(userRepo.findUserByEmail(newUser.getUsername()).isPresent()) {
-            throw new IllegalStateException("This username is already taken");
+            throw new RuntimeException("This username is already taken");
         } else {
             userRepo.save(newUser);
             return newUser;

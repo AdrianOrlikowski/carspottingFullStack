@@ -41,14 +41,25 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             http.authorizeRequests().anyRequest().permitAll();
         } else if (Globals.secType == SecType.HTTP_BASIC) {
             http.authorizeRequests()
-                    .antMatchers("/carspotting/spots").permitAll()
+                    .antMatchers("/").permitAll()
+                    .antMatchers("/login").permitAll()
+                    .antMatchers("/logout").permitAll()
+                    .antMatchers("/register").permitAll()
+                    .antMatchers("/users/register").permitAll()
+                    .antMatchers("/css/*", "/js/*").permitAll()
                     .anyRequest().authenticated().and().httpBasic();
         } else if (Globals.secType == SecType.FORM_LOGIN) {
             http.authorizeRequests()
                 .antMatchers("/").permitAll()
+                .antMatchers("/login").permitAll()
+                .antMatchers("/logout").permitAll()
+                .antMatchers("/register").permitAll()
+                .antMatchers("/users/register").permitAll()
                 .antMatchers("/css/*", "/js/*").permitAll()
                 .antMatchers("/data/spots").permitAll()
-                .anyRequest().authenticated().and().formLogin();
+                .anyRequest().authenticated().and().formLogin()
+                    .loginPage("/login");
+
         }
 
     }
