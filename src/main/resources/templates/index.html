@@ -1,0 +1,39 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+  <meta charset="utf-8">
+  <title>Carspotting Warsaw</title>
+
+  <!-- Place favicon.ico in the root directory -->
+  <link rel="stylesheet" th:href="@{/css/normalize.css}">
+  <link rel="stylesheet" th:href="@{/css/design.css}">
+
+
+</head>
+
+<body>
+  <div class="topbar">
+    <h1>Carspotting Warsaw</h1>
+    <p>Seen a unique/exotic car? Have a picture? Share it with other enthusiasts.</p>
+  </div>
+  <div class="menubar">
+      <a th:href="@{/}">Spots</a>
+      <a th:href="@{/addspot}">Add spot</a>
+  </div>
+
+  <div id="postArea">
+    <!--Here posts are inserted by JS code -->
+  </div>
+
+  <div id="siteEnd"></div>
+
+  <script th:src="@{js/main.js}"></script>
+
+</body>
+
+<footer class="footer">
+  <p><small>created by AO, 2022</small><br>
+</footer>
+
+</html>

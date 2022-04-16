@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Carspotting Warsaw</title>
+
+  <link rel="stylesheet" th:href="@{/css/normalize.css}">
+  <link rel="stylesheet" th:href="@{/css/design.css}">
+
+</head>
+<body>
+
+<div class="topbar">
+  <h1>Carspotting Warsaw</h1>
+  <p>Seen a unique/exotic car? Have a picture? Share it with other enthusiasts.</p>
+
+</div>
+<div class="menubar">
+  <a th:href="@{/}">Spots</a>
+  <a th:href="@{/addpsot}">Add spot</a>
+</div>
+
+<div>
+  <form class="form">
+    <div class="formInput">
+      <input name="carMake" type="text" placeholder="Car Make">
+    </div>
+    <div class="formInput">
+      <input name="carModel" type="text" placeholder="Car Model">
+    </div>
+    <div class="formInput">
+      <input name="carPicFile" type="file">
+    </div>
+
+  </form>
+</div>
+<div>
+  <button class="button" id="spotSubmit">Add spot</button>
+</div>
+
+<script th:src="@{js/addspot.js}"></script>
+
+</body>
+
+<footer class="footer">
+  <p><small>created by AO, 2022</small><br>
+</footer>
+
+</html>

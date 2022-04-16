@@ -1,0 +1,110 @@
+package pl.orlikowski.carspottingBack.API;
+
+
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import pl.orlikowski.carspottingBack.exceptions.SpotAddException;
+import pl.orlikowski.carspottingBack.repository.Spotting;
+import pl.orlikowski.carspottingBack.service.*;
+import pl.orlikowski.carspottingBack.tools.Tools;
+
+import java.io.IOException;
+
+
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+
+@RestController
+@RequestMapping(path = "data")
+public class SpottingController {
+    private final SpottingService spottingService;
+    private final UserService userService;
+    private final ModelMapper modelMapper;
+
+    @Autowired
+    public SpottingController(SpottingService spottingService, UserService userService, ModelMapper modelMapper) {
+        this.spottingService = spottingService;
+        this.userService = userService;
+        this.modelMapper = modelMapper;
+    }
+
+    @GetMapping(path = "/spots/{id}")
+    public SpottingDTO getSpot(@PathVariable("id") Long id) throws IOException {
+        Optional<Spotting> spotOp = spottingService.getSpot(id);
+        if(spotOp.isEmpty()) {
+            throw new IOException("Spot with selected id does not exist");
+        } else {
+            return modelMapper.map(spotOp.get(), SpottingDTO.class);
+        }
+    }
+
+    @GetMapping(path = "/spots")
+    public List<SpottingDTO> getSpots(){
+        return spottingService.getSpots()
+                .stream()
+                .map(spot -> modelMapper.map(spot, SpottingDTO.class))
+                .toList();
+    }
+    /*
+    @CrossOrigin
+    @PostMapping(path = "/addspot")
+    public SpottingDTO addSpot(@ModelAttribute SpottingPostDTO postDTO) throws SpotAddException, IOException {
+        if(postDTO.getCarPicFile() == null || !Tools.getExtension(postDTO.getCarPicFile()).equals("jpeg")) {
+            throw new SpotAddException("Submitted file must be in a .jpeg format");
+        } else if(postDTO.getCarMake().equals("") || postDTO.getCarModel().equals("")) {
+            throw new SpotAddException("Car make and model must be provided");
+        } else {
+            Spotting spot = spottingService.addSpot(postDTO);
+            SpottingDTO retDTO = modelMapper.map(spot, SpottingDTO.class);
+            return  retDTO;
+        }
+    }
+    */
+
+    /*
+    @ExceptionHandler(value={SpotAddException.class})
+    public ResponseEntity<Object> handleSpotAddException(SpotAddException e) {
+
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+
+    }
+    */
+
+
+    //Do testowania frontu
+    @CrossOrigin
+    @PostMapping(path = "/addspot")
+    public SpottingDTO addSpot(@RequestParam("carMake") String carMake,
+                               @RequestParam("carModel") String carModel,
+                               @RequestParam("carPicFile") MultipartFile carPicFile) {
+        //Checking if the form was populated correcttly
+        if(carPicFile == null || !Objects.equals(Tools.getExtension(carPicFile), "jpeg")) {
+            throw new SpotAddException("Submitted file must be in a .jpeg format");
+        } else if(carMake.equals("") || carModel.equals("")) {
+            throw new SpotAddException("Car make and model must be provided");
+        } else {
+            //getting the username
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+            String username = authentication.getName();
+
+            //Calling the spoting repository
+            SpottingPostDTO postDTO = new SpottingPostDTO(username, carMake, carModel, carPicFile);
+            Spotting spot = spottingService.addSpot(postDTO);
+            SpottingDTO retDTO = modelMapper.map(spot, SpottingDTO.class);
+            return  retDTO;
+        }
+
+    }
+
+
+
+
+
+}
