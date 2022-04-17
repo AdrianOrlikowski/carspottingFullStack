@@ -12,5 +12,5 @@ public interface CarRepo extends JpaRepository<Car, Long> {
     @Transactional
     void deleteById(Long id);
 
-    Optional<Car> findFirst1ByMakeAndModel(String make, String model);
+    Optional<Car> findFirst1ByMakeIgnoreCaseAndModelIgnoreCase(String make, String model);
 }

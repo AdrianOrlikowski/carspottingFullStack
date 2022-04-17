@@ -9,9 +9,9 @@ import java.util.List;
 @Repository
 public interface SpottingRepo extends JpaRepository<Spotting, Long> {
 
-    List<Spotting> findAllByCarMakeAndCarModel(String carMake, String carModel);
+    List<Spotting> findAllByCarMakeIgnoreCaseAndCarModelIgnoreCase(String carMake, String carModel);
 
-    List<Spotting> findAllByCarMake(String carMake);
+    List<Spotting> findAllByCarMakeIgnoreCase(String carMake);
 
     @Transactional
     void deleteById(Long id);

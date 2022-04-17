@@ -74,6 +74,16 @@ public class AppUser implements UserDetails {
         this.spottings = spottings;
     }
 
+    @Override
+    public String toString() {
+        return "AppUser{" +
+                "userId=" + userId +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
+
     /////////////////////////////////////////////////////////////////////////
     //Adding spotings
     public void addSpot(Car car) {

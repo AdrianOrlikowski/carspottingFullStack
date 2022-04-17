@@ -2,7 +2,7 @@ package pl.orlikowski.carspottingBack.API;
 
 import java.time.LocalDateTime;
 
-public class SpottingDTO {
+public class SpottingGetDTO {
     private Long spotId;
     private String appUserUsername;
     private LocalDateTime dateTime;
@@ -10,9 +10,18 @@ public class SpottingDTO {
     private String carModel;
     private String picURL;
 
-    public SpottingDTO() {}
+    public SpottingGetDTO() {}
 
-    public SpottingDTO(String appUserUsername, LocalDateTime dateTime, String carMake, String carModel, String picURL) {
+    public SpottingGetDTO(String appUserUsername, LocalDateTime dateTime, String carMake, String carModel, String picURL) {
+        this.appUserUsername = appUserUsername;
+        this.dateTime = dateTime;
+        this.carMake = carMake;
+        this.carModel = carModel;
+        this.picURL = picURL;
+    }
+
+    public SpottingGetDTO(Long spotId, String appUserUsername, LocalDateTime dateTime, String carMake, String carModel, String picURL) {
+        this.spotId = spotId;
         this.appUserUsername = appUserUsername;
         this.dateTime = dateTime;
         this.carMake = carMake;

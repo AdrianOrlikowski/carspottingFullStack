@@ -11,7 +11,8 @@ import java.io.File;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class Tools {
+//Class containing useful static methods
+public abstract class Tools {
 
     //Function returning the file extension from filename. If it cannot retrieve it returns null
     public static String getExtension(MultipartFile file) {
@@ -35,6 +36,12 @@ public class Tools {
         } catch (Exception e) {
             return null;
         }
+    }
+    //Function capitalizing Strings
+    public static String capitalize(String str)
+    {
+        if(str == null) return str;
+        return str.substring(0, 1).toUpperCase() + str.substring(1);
     }
 
 

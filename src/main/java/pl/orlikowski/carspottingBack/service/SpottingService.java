@@ -33,10 +33,10 @@ public class SpottingService {
     public Optional<Spotting> getSpot(Long id) { return spottingRepo.findById(id);}
 
     public List<Spotting> getSpots(String carMake, String carModel) {
-        return spottingRepo.findAllByCarMakeAndCarModel(carMake, carModel);
+        return spottingRepo.findAllByCarMakeIgnoreCaseAndCarModelIgnoreCase(carMake, carModel);
     }
     public List<Spotting> getSpots(String carMake) {
-        return spottingRepo.findAllByCarMake(carMake);
+        return spottingRepo.findAllByCarMakeIgnoreCase(carMake);
     }
 
     public List<Car> getAllCars() { return carRepo.findAll(); }
@@ -48,7 +48,7 @@ public class SpottingService {
         } else {
             Spotting spot = null;
             //Checking if submitted car is already in the database
-            Optional<Car> optCar = carRepo.findFirst1ByMakeAndModel(postDTO.getCarMake(), postDTO.getCarModel());
+            Optional<Car> optCar = carRepo.findFirst1ByMakeIgnoreCaseAndModelIgnoreCase(postDTO.getCarMake(), postDTO.getCarModel());
             if (optCar.isEmpty()) {
                 Car newCar = new Car(postDTO.getCarMake(), postDTO.getCarModel());
                 carRepo.save(newCar);
@@ -82,6 +82,20 @@ public class SpottingService {
             }
 
         }
+    }
+
+    public Spotting deleteSpot(Long spotId, String appUserUsername) {
+        Optional<Spotting>spotToDelete = spottingRepo.findById(spotId);
+        if(spotToDelete.isEmpty()) {
+            throw new RuntimeException("Spot not found");
+        }
+        String addedBy = spotToDelete.get().getAppUser().getUsername();
+        if(!addedBy.equals(appUserUsername)) {
+               throw new RuntimeException("You don't have privileges to delete this spot." +
+                       "Only OP can delete his/her spots.") ;
+        }
+            spottingRepo.deleteById(spotId);
+            return spotToDelete.get();
     }
 
 

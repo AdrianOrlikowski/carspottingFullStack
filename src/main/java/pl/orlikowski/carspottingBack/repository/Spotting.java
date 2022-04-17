@@ -81,4 +81,15 @@ public class Spotting {
     public String getPicURL() { return picURL; }
 
     public void setPicURL(String picURL) { this.picURL = picURL; }
+
+    @Override
+    public String toString() {
+        return "Spotting{" +
+                "spotId=" + spotId +
+                ", dateTime=" + dateTime +
+                ", appUser=" + appUser +
+                ", car=" + car +
+                ", picURL='" + picURL + '\'' +
+                '}';
+    }
 }

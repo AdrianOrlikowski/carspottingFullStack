@@ -1,5 +1,7 @@
 package pl.orlikowski.carspottingBack.repository;
 
+import pl.orlikowski.carspottingBack.tools.Tools;
+
 import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
@@ -34,13 +36,12 @@ public class Car {
             mappedBy = "car",
             orphanRemoval = true
     )
-    //@JsonManagedReference
     private List<Spotting> spottings; // = new ArrayList<>();
     ///////////////////////////////////////////////////////
     //Constructors, getters, setters & toString
     public Car(String make, String model) {
-        this.make = make;
-        this.model = model;
+        this.make = Tools.capitalize(make);
+        this.model = Tools.capitalize(model);
     }
 
     public Car() {}
@@ -58,7 +59,7 @@ public class Car {
     }
 
     public void setMake(String make) {
-        this.make = make;
+        this.make = Tools.capitalize(make);
     }
 
     public String getModel() {
@@ -66,7 +67,7 @@ public class Car {
     }
 
     public void setModel(String model) {
-        this.model = model;
+        this.model = Tools.capitalize(model);
     }
 
     public List<Spotting> getSpottings() {

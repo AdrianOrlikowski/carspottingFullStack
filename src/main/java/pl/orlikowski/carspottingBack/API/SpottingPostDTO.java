@@ -1,6 +1,7 @@
 package pl.orlikowski.carspottingBack.API;
 
 import org.springframework.web.multipart.MultipartFile;
+import pl.orlikowski.carspottingBack.tools.Tools;
 
 import java.time.LocalDateTime;
 
@@ -35,11 +36,11 @@ public class SpottingPostDTO {
 
     public String getCarMake() { return carMake; }
 
-    public void setCarMake(String carMake) { this.carMake = carMake; }
+    public void setCarMake(String carMake) { this.carMake = Tools.capitalize(carMake); }
 
     public String getCarModel() { return carModel; }
 
-    public void setCarModel(String carModel) { this.carModel = carModel; }
+    public void setCarModel(String carModel) { this.carModel = Tools.capitalize(carModel); }
 
     public MultipartFile getCarPicFile() { return carPicFile; }
 

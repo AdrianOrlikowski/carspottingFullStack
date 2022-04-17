@@ -6,10 +6,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import pl.orlikowski.carspottingBack.API.SpottingDTO;
 import pl.orlikowski.carspottingBack.repository.*;
+import pl.orlikowski.carspottingBack.service.*;
 import pl.orlikowski.carspottingBack.security.PassEncoder;
-import pl.orlikowski.carspottingBack.tools.Globals;
+import pl.orlikowski.carspottingBack.tools.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -26,7 +26,8 @@ public class CarspottingApplication {
 	ModelMapper modelMapper() { return new ModelMapper();}
 
 	@Bean
-	CommandLineRunner commandLineRunner(SpottingRepo spottingRepo, CarRepo carRepo, UserRepo userRepo, PassEncoder passEncoder) {
+	CommandLineRunner commandLineRunner(SpottingRepo spottingRepo, CarRepo carRepo, UserRepo userRepo, PassEncoder passEncoder,
+										SpottingService spottingService) {
 		return args -> {
 			System.out.println("Testing CommandLineRunner");
 
@@ -52,25 +53,11 @@ public class CarspottingApplication {
 					Globals.picPath + "3.jpeg");
 			spottingRepo.saveAll(List.of(spot1, spot2, spot3));
 
-			//ModelMapper testing
-			ModelMapper modelMapper1 = new ModelMapper();
-
-			SpottingDTO getSpot = modelMapper1.map(spot1, SpottingDTO.class);
-			System.out.println(getSpot);
-
-			//Testing repo
-			List<Spotting> searchTest = spottingRepo.findAllByCarMakeAndCarModel("Ferrari", "Testarossa");
-
-			for(Spotting spot : searchTest) {
-				System.out.println(spot);
-			}
 
 
 
-			//spottingRepo.deleteById(1L);
-			//carRepo.deleteById(1L);
-			//user1.addSpot(car3);
-			//userRepo.save(user1);
+
+
 
 
 
