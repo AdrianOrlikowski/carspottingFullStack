@@ -13,6 +13,8 @@ public interface SpottingRepo extends JpaRepository<Spotting, Long> {
 
     List<Spotting> findAllByCarMakeIgnoreCase(String carMake);
 
+    List<Spotting> findAllByAppUserUsername(String appUserUsername);
+
     @Transactional
     void deleteById(Long id);
 }

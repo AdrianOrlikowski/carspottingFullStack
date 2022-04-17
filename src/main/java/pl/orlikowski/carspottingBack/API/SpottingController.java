@@ -64,12 +64,22 @@ public class SpottingController {
                     .toList();
         }
     }
+    @GetMapping(path="/myspots")
+    public List<SpottingGetDTO> getMySpots() {
+        //getting the username
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+         return spottingService.getSpotsByUser(username)
+                 .stream()
+                 .map(spot -> modelMapper.map(spot, SpottingGetDTO.class))
+                 .toList();
+    }
 
     @GetMapping(path="/cars")
-    public List<CarDTO> getAllCars() {
+    public List<CarGetDTO> getAllCars() {
         return spottingService.getAllCars()
                 .stream()
-                .map(car -> modelMapper.map(car, CarDTO.class))
+                .map(car -> modelMapper.map(car, CarGetDTO.class))
                 .toList(); }
 
     @CrossOrigin

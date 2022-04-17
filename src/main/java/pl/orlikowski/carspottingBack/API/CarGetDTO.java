@@ -2,19 +2,19 @@ package pl.orlikowski.carspottingBack.API;
 
 import pl.orlikowski.carspottingBack.tools.Tools;
 
-public class CarDTO {
+public class CarGetDTO {
     private Long carId;
     private String make;
     private String model;
 
-    public CarDTO() {}
+    public CarGetDTO() {}
 
-    public CarDTO(String make, String model) {
+    public CarGetDTO(String make, String model) {
         this.make = make;
         this.model = model;
     }
 
-    public CarDTO(Long carId, String make, String model) {
+    public CarGetDTO(Long carId, String make, String model) {
         this.carId = carId;
         this.make = make;
         this.model = model;

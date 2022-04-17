@@ -39,6 +39,10 @@ public class SpottingService {
         return spottingRepo.findAllByCarMakeIgnoreCase(carMake);
     }
 
+    public List<Spotting> getSpotsByUser(String AppUserUsername) {
+        return spottingRepo.findAllByAppUserUsername(AppUserUsername);
+    }
+
     public List<Car> getAllCars() { return carRepo.findAll(); }
 
     public Spotting addSpot(SpottingPostDTO postDTO) throws RuntimeException {

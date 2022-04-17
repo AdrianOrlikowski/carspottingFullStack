@@ -28,6 +28,9 @@ public class FrontController {
     @GetMapping(path="/search")
     public String getSearch() { return "search"; }
 
+    @GetMapping(path="/myspots")
+    public String getMySPots() { return "myspots"; }
+
 
 
 

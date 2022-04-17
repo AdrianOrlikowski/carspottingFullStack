@@ -53,13 +53,11 @@ public class CarspottingApplication {
 					Globals.picPath + "3.jpeg");
 			spottingRepo.saveAll(List.of(spot1, spot2, spot3));
 
+			List<Spotting> search1 = spottingRepo.findAllByAppUserUsername("adrian");
 
-
-
-
-
-
-
+			for(Spotting spot : search1) {
+				System.out.println(spot);
+			}
 
 		};
 
