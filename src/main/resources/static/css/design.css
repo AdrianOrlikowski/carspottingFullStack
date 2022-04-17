@@ -2,6 +2,10 @@ body, footer{
   font-family: Arial, Helvetica,  sans-serif;
 }
 
+small{
+  font-style: italic;
+}
+
 .topbar{
   margin: 0 0 10px;
   padding: 20px;
