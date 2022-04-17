@@ -58,6 +58,12 @@ public class CarspottingApplication {
 			SpottingDTO getSpot = modelMapper1.map(spot1, SpottingDTO.class);
 			System.out.println(getSpot);
 
+			//Testing repo
+			List<Spotting> searchTest = spottingRepo.findAllByCarMakeAndCarModel("Ferrari", "Testarossa");
+
+			for(Spotting spot : searchTest) {
+				System.out.println(spot);
+			}
 
 
 

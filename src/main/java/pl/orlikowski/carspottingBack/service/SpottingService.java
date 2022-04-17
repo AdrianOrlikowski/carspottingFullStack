@@ -28,11 +28,18 @@ public class SpottingService {
         this.userRepo = userRepo;
     }
 
-    public List<Spotting> getSpots() { return spottingRepo.findAll(); }
+    public List<Spotting> getAllSpots() { return spottingRepo.findAll(); }
 
     public Optional<Spotting> getSpot(Long id) { return spottingRepo.findById(id);}
 
-    public List<Car> getCars() { return carRepo.findAll(); }
+    public List<Spotting> getSpots(String carMake, String carModel) {
+        return spottingRepo.findAllByCarMakeAndCarModel(carMake, carModel);
+    }
+    public List<Spotting> getSpots(String carMake) {
+        return spottingRepo.findAllByCarMake(carMake);
+    }
+
+    public List<Car> getAllCars() { return carRepo.findAll(); }
 
     public Spotting addSpot(SpottingPostDTO postDTO) throws RuntimeException {
         Optional<AppUser> optUser = userRepo.findUserByUsername(postDTO.getAppUserUsername());

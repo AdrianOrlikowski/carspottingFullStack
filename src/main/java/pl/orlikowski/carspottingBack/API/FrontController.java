@@ -23,8 +23,10 @@ public class FrontController {
     public String getLogin() { return "login"; }
 
     @GetMapping(path="/register")
-    public String getRegister() { return "register";
-    }
+    public String getRegister() { return "register"; }
+
+    @GetMapping(path="/search")
+    public String getSearch() { return "search"; }
 
 
 

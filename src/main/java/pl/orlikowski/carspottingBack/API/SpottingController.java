@@ -3,8 +3,6 @@ package pl.orlikowski.carspottingBack.API;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -13,8 +11,6 @@ import pl.orlikowski.carspottingBack.exceptions.SpotAddException;
 import pl.orlikowski.carspottingBack.repository.Spotting;
 import pl.orlikowski.carspottingBack.service.*;
 import pl.orlikowski.carspottingBack.tools.Tools;
-
-import java.io.IOException;
 
 
 import java.util.List;
@@ -46,27 +42,29 @@ public class SpottingController {
     }
 
     @GetMapping(path = "/spots")
-    public List<SpottingDTO> getSpots(){
-        return spottingService.getSpots()
+    public List<SpottingDTO> getAllSpots(){
+        return spottingService.getAllSpots()
                 .stream()
                 .map(spot -> modelMapper.map(spot, SpottingDTO.class))
                 .toList();
     }
-    /*
-    @CrossOrigin
-    @PostMapping(path = "/addspot")
-    public SpottingDTO addSpot(@ModelAttribute SpottingPostDTO postDTO) throws SpotAddException, IOException {
-        if(postDTO.getCarPicFile() == null || !Tools.getExtension(postDTO.getCarPicFile()).equals("jpeg")) {
-            throw new SpotAddException("Submitted file must be in a .jpeg format");
-        } else if(postDTO.getCarMake().equals("") || postDTO.getCarModel().equals("")) {
-            throw new SpotAddException("Car make and model must be provided");
+
+    @GetMapping(path="/search")
+    public List<SpottingDTO> getSpots(@RequestParam("carMake") String carMake,
+                                      @RequestParam(value = "carModel", required = false) String carModel) {
+        if(carModel == null || carModel.equals("")) {
+            return spottingService.getSpots(carMake)
+                    .stream()
+                    .map(spot -> modelMapper.map(spot, SpottingDTO.class))
+                    .toList();
         } else {
-            Spotting spot = spottingService.addSpot(postDTO);
-            SpottingDTO retDTO = modelMapper.map(spot, SpottingDTO.class);
-            return  retDTO;
+            return spottingService.getSpots(carMake, carModel)
+                    .stream()
+                    .map(spot -> modelMapper.map(spot, SpottingDTO.class))
+                    .toList();
         }
     }
-    */
+
 
     @CrossOrigin
     @PostMapping(path = "/addspot")
@@ -90,10 +88,23 @@ public class SpottingController {
             return  retDTO;
         }
 
+        /*
+    @CrossOrigin
+    @PostMapping(path = "/addspot")
+    public SpottingDTO addSpot(@ModelAttribute SpottingPostDTO postDTO) throws SpotAddException, IOException {
+        if(postDTO.getCarPicFile() == null || !Tools.getExtension(postDTO.getCarPicFile()).equals("jpeg")) {
+            throw new SpotAddException("Submitted file must be in a .jpeg format");
+        } else if(postDTO.getCarMake().equals("") || postDTO.getCarModel().equals("")) {
+            throw new SpotAddException("Car make and model must be provided");
+        } else {
+            Spotting spot = spottingService.addSpot(postDTO);
+            SpottingDTO retDTO = modelMapper.map(spot, SpottingDTO.class);
+            return  retDTO;
+        }
     }
+    */
 
-
-
+    }
 
 
 }

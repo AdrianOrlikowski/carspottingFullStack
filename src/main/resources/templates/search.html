@@ -25,6 +25,24 @@
       <a th:href="@{/logout}">Logout</a>
       <a th:href="@{/register}">Register</a>
   </div>
+  <div class="footer">
+      <h2>Search spottings by make and model</h2>
+  </div>
+  <!--Search form -->
+  <div>
+      <form class="form">
+          <div class="formInput">
+              <input name="carMake" type="text" placeholder="Car Make">
+          </div>
+          <div class="formInput">
+              <input name="carModel" type="text" placeholder="Car Model">
+          </div>
+      </form>
+  </div>
+  <div>
+      <button class="button" id="spotSearch">Search</button>
+  </div>
+
 
   <div id="postArea">
     <!--Here posts are inserted by JS code -->
@@ -33,7 +51,7 @@
   <div id="siteEnd"></div>
 
   <script th:src="@{js/loadspot.js}"></script>
-  <script th:src="@{js/main.js}"></script>
+  <script th:src="@{js/searchspots.js}"></script>
 
 </body>
 
