@@ -1,4 +1,7 @@
-package pl.orlikowski.carspottingBack.repository;
+package pl.orlikowski.carspottingBack.businessClasses;
+
+import pl.orlikowski.carspottingBack.businessClasses.AppUser;
+import pl.orlikowski.carspottingBack.businessClasses.Car;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

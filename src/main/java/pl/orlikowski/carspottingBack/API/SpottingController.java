@@ -6,10 +6,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import pl.orlikowski.carspottingBack.businessClasses.*;
 import pl.orlikowski.carspottingBack.exceptions.SpotAddException;
 
-import pl.orlikowski.carspottingBack.repository.*;
-import pl.orlikowski.carspottingBack.service.*;
+import pl.orlikowski.carspottingBack.services.*;
 import pl.orlikowski.carspottingBack.tools.Tools;
 
 
@@ -27,9 +27,8 @@ public class SpottingController {
     private final DtoMapper dtoMapper;
 
     @Autowired
-    public SpottingController(SpottingService spottingService, UserService userService, DtoMapper dtoMapper) {
+    public SpottingController(SpottingService spottingService, DtoMapper dtoMapper) {
         this.spottingService = spottingService;
-        this.userService = userService;
         this.dtoMapper = dtoMapper;
     }
 

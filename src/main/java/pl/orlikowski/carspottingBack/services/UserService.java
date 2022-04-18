@@ -1,11 +1,12 @@
-package pl.orlikowski.carspottingBack.service;
+package pl.orlikowski.carspottingBack.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import pl.orlikowski.carspottingBack.repository.*;
+import pl.orlikowski.carspottingBack.businessClasses.AppUser;
+import pl.orlikowski.carspottingBack.repositories.*;
 
 import java.util.List;
 

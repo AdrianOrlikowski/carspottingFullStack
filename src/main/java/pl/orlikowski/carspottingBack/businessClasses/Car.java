@@ -1,4 +1,4 @@
-package pl.orlikowski.carspottingBack.repository;
+package pl.orlikowski.carspottingBack.businessClasses;
 
 import pl.orlikowski.carspottingBack.tools.Tools;
 

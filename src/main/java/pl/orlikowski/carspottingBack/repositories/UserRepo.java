@@ -1,7 +1,8 @@
-package pl.orlikowski.carspottingBack.repository;
+package pl.orlikowski.carspottingBack.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import pl.orlikowski.carspottingBack.businessClasses.AppUser;
 
 import java.util.Optional;
 

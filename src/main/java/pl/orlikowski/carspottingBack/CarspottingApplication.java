@@ -6,8 +6,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import pl.orlikowski.carspottingBack.repository.*;
-import pl.orlikowski.carspottingBack.service.*;
+import pl.orlikowski.carspottingBack.businessClasses.AppUser;
+import pl.orlikowski.carspottingBack.businessClasses.Car;
+import pl.orlikowski.carspottingBack.businessClasses.Spotting;
+import pl.orlikowski.carspottingBack.repositories.*;
+import pl.orlikowski.carspottingBack.services.*;
 import pl.orlikowski.carspottingBack.security.PassEncoder;
 import pl.orlikowski.carspottingBack.tools.*;
 

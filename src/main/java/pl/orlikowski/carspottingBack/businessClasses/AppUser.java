@@ -1,4 +1,4 @@
-package pl.orlikowski.carspottingBack.repository;
+package pl.orlikowski.carspottingBack.businessClasses;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

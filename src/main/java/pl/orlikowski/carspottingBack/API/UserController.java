@@ -2,10 +2,9 @@ package pl.orlikowski.carspottingBack.API;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import pl.orlikowski.carspottingBack.repository.AppUser;
-import pl.orlikowski.carspottingBack.service.UserService;
+import pl.orlikowski.carspottingBack.businessClasses.AppUser;
+import pl.orlikowski.carspottingBack.services.UserService;
 
 @RestController
 @RequestMapping(path="users")
