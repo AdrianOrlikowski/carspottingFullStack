@@ -109,7 +109,7 @@ public class SpottingController {
     }
 
     @CrossOrigin
-    @DeleteMapping(path ="/spots/{id}")
+    @DeleteMapping(path ="/myspots/{id}")
     public SpottingGetDTO deleteSpot(@PathVariable("id") Long spotId) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
