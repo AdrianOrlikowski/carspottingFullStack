@@ -1,13 +1,13 @@
 package pl.orlikowski.carspottingBack.API;
 
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import pl.orlikowski.carspottingBack.exceptions.SpotAddException;
+
 import pl.orlikowski.carspottingBack.repository.*;
 import pl.orlikowski.carspottingBack.service.*;
 import pl.orlikowski.carspottingBack.tools.Tools;
@@ -17,18 +17,20 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+//Rest controller handling http requests. Requests can come directly from http client like postman.
+//Front-end templates provided by FrontController call these via javascript
 @RestController
 @RequestMapping(path = "data")
 public class SpottingController {
     private final SpottingService spottingService;
-    private final UserService userService;
-    private final ModelMapper modelMapper;
+    //private final UserService userService;
+    private final DtoMapper dtoMapper;
 
     @Autowired
-    public SpottingController(SpottingService spottingService, UserService userService, ModelMapper modelMapper) {
+    public SpottingController(SpottingService spottingService, UserService userService, DtoMapper dtoMapper) {
         this.spottingService = spottingService;
         this.userService = userService;
-        this.modelMapper = modelMapper;
+        this.dtoMapper = dtoMapper;
     }
 
     @GetMapping(path = "/spots/{id}")
@@ -37,31 +39,22 @@ public class SpottingController {
         if(spotOp.isEmpty()) {
             throw new RuntimeException("Spot with selected id does not exist");
         } else {
-            return modelMapper.map(spotOp.get(), SpottingGetDTO.class);
+            return dtoMapper.toSpottingDTO(spotOp.get());
         }
     }
 
     @GetMapping(path = "/spots")
     public List<SpottingGetDTO> getAllSpots(){
-        return spottingService.getAllSpots()
-                .stream()
-                .map(spot -> modelMapper.map(spot, SpottingGetDTO.class))
-                .toList();
+        return dtoMapper.toSpottingDTO(spottingService.getAllSpots());
     }
 
     @GetMapping(path="/search")
     public List<SpottingGetDTO> getSpots(@RequestParam("carMake") String carMake,
                                          @RequestParam(value = "carModel", required = false) String carModel) {
         if(carModel == null || carModel.equals("")) {
-            return spottingService.getSpots(carMake)
-                    .stream()
-                    .map(spot -> modelMapper.map(spot, SpottingGetDTO.class))
-                    .toList();
+            return dtoMapper.toSpottingDTO(spottingService.getSpots(carMake));
         } else {
-            return spottingService.getSpots(carMake, carModel)
-                    .stream()
-                    .map(spot -> modelMapper.map(spot, SpottingGetDTO.class))
-                    .toList();
+            return dtoMapper.toSpottingDTO(spottingService.getSpots(carMake, carModel));
         }
     }
     @GetMapping(path="/myspots")
@@ -69,18 +62,14 @@ public class SpottingController {
         //getting the username
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
-         return spottingService.getSpotsByUser(username)
-                 .stream()
-                 .map(spot -> modelMapper.map(spot, SpottingGetDTO.class))
-                 .toList();
+        //finding the spots, mapping and returning;
+        return dtoMapper.toSpottingDTO(spottingService.getSpotsByUser(username));
     }
 
     @GetMapping(path="/cars")
     public List<CarGetDTO> getAllCars() {
-        return spottingService.getAllCars()
-                .stream()
-                .map(car -> modelMapper.map(car, CarGetDTO.class))
-                .toList(); }
+        return dtoMapper.toCarDTO(spottingService.getAllCars());
+    }
 
     @CrossOrigin
     @PostMapping(path = "/addspot")
@@ -100,8 +89,7 @@ public class SpottingController {
             //Calling the spoting repository
             SpottingPostDTO postDTO = new SpottingPostDTO(username, carMake, carModel, carPicFile);
             Spotting spot = spottingService.addSpot(postDTO);
-            SpottingGetDTO retDTO = modelMapper.map(spot, SpottingGetDTO.class);
-            return  retDTO;
+            return dtoMapper.toSpottingDTO(spot);
         }
 
         /*
@@ -114,8 +102,7 @@ public class SpottingController {
             throw new SpotAddException("Car make and model must be provided");
         } else {
             Spotting spot = spottingService.addSpot(postDTO);
-            SpottingDTO retDTO = modelMapper.map(spot, SpottingDTO.class);
-            return  retDTO;
+            return dtoMapper.toSpottingDTO(spot);
         }
     }
     */
@@ -128,7 +115,6 @@ public class SpottingController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
         Spotting spotDeleted = spottingService.deleteSpot(spotId, username);
-        return modelMapper.map(spotDeleted, SpottingGetDTO.class);
-
+        return dtoMapper.toSpottingDTO(spotDeleted);
     }
 }

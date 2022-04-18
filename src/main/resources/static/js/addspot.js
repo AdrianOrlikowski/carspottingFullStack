@@ -35,7 +35,7 @@ function sendData()
         alert(resp.message);
       }
       //go to main page
-      //window.location.href = "http://localhost:8080"
+      window.location.href = "http://localhost:8080"
     });
     //Sending the request
     XHR.open("POST",source);

@@ -10,9 +10,9 @@ function loadSpot(apiSpot) {
     spot.appendChild(carMakeModel);
 
     dateString = new Date(dateTime).toLocaleString();
-    let postedBy = document.createElement("p");
-    postedBy.innerHTML =`<small>Posted by: ${appUserUsername} on ${dateString}</small>`;
-    spot.appendChild(postedBy);
+    let spottedBy = document.createElement("p");
+    spottedBy.innerHTML =`<small>Spotted by: ${appUserUsername} on ${dateString}</small>`;
+    spot.appendChild(spottedBy);
     
     let line = document.createElement("hr");
     spot.appendChild(line);
