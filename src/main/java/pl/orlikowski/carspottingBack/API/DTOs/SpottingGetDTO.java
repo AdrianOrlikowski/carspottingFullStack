@@ -1,4 +1,4 @@
-package pl.orlikowski.carspottingBack.API;
+package pl.orlikowski.carspottingBack.API.DTOs;
 
 import java.time.LocalDateTime;
 

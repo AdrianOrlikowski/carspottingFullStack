@@ -11,7 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import pl.orlikowski.carspottingBack.services.UserService;
-import pl.orlikowski.carspottingBack.tools.Globals;
+import pl.orlikowski.carspottingBack.globals.Globals;
 
 @Configuration
 @EnableWebSecurity
@@ -46,6 +46,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/logout").permitAll()
                     .antMatchers("/register").permitAll()
                     .antMatchers("/users/register").permitAll()
+                    .antMatchers("/users/activate").permitAll()
                     .antMatchers("/css/*", "/js/*").permitAll()
                     .antMatchers("/data/spots").permitAll()
                     .antMatchers("/data/search").permitAll()
@@ -58,6 +59,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/logout").permitAll()
                 .antMatchers("/register").permitAll()
                 .antMatchers("/users/register").permitAll()
+                .antMatchers("/users/activate").permitAll()
                 .antMatchers("/css/*", "/js/*").permitAll()
                 .antMatchers("/data/spots").permitAll()
                 .antMatchers("/data/search").permitAll()

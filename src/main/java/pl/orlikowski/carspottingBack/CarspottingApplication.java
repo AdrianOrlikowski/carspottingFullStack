@@ -9,10 +9,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import pl.orlikowski.carspottingBack.businessClasses.AppUser;
 import pl.orlikowski.carspottingBack.businessClasses.Car;
 import pl.orlikowski.carspottingBack.businessClasses.Spotting;
+import pl.orlikowski.carspottingBack.mailing.TokenGenerator;
 import pl.orlikowski.carspottingBack.repositories.*;
 import pl.orlikowski.carspottingBack.services.*;
 import pl.orlikowski.carspottingBack.security.PassEncoder;
-import pl.orlikowski.carspottingBack.tools.*;
+import pl.orlikowski.carspottingBack.globals.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -30,7 +31,7 @@ public class CarspottingApplication {
 
 	@Bean
 	CommandLineRunner commandLineRunner(SpottingRepo spottingRepo, CarRepo carRepo, UserRepo userRepo, PassEncoder passEncoder,
-										SpottingService spottingService) {
+										SpottingService spottingService, TokenGenerator tokenGenerator) {
 		return args -> {
 			System.out.println("Testing CommandLineRunner");
 
@@ -39,7 +40,9 @@ public class CarspottingApplication {
 
 			//Test user
 			AppUser user1 = new AppUser("adrian","adrian@gmail.com",
-					encoder.encode("adrian"));
+					encoder.encode("adrian"),
+					true, "dupa");
+
 			userRepo.save(user1);
 
 			//Test cars

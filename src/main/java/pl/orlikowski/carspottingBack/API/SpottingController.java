@@ -6,11 +6,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import pl.orlikowski.carspottingBack.API.DTOs.CarGetDTO;
+import pl.orlikowski.carspottingBack.API.DTOs.SpottingGetDTO;
+import pl.orlikowski.carspottingBack.API.DTOs.SpottingPostDTO;
 import pl.orlikowski.carspottingBack.businessClasses.*;
 import pl.orlikowski.carspottingBack.exceptions.SpotAddException;
 
 import pl.orlikowski.carspottingBack.services.*;
-import pl.orlikowski.carspottingBack.tools.Tools;
+import pl.orlikowski.carspottingBack.globals.Tools;
 
 
 import java.util.List;

@@ -2,14 +2,14 @@ package pl.orlikowski.carspottingBack.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.orlikowski.carspottingBack.API.SpottingPostDTO;
+import pl.orlikowski.carspottingBack.API.DTOs.SpottingPostDTO;
 import pl.orlikowski.carspottingBack.businessClasses.AppUser;
 import pl.orlikowski.carspottingBack.businessClasses.Car;
 import pl.orlikowski.carspottingBack.businessClasses.Spotting;
 import pl.orlikowski.carspottingBack.exceptions.SpotAddException;
 import pl.orlikowski.carspottingBack.repositories.*;
-import pl.orlikowski.carspottingBack.tools.Globals;
-import pl.orlikowski.carspottingBack.tools.Tools;
+import pl.orlikowski.carspottingBack.globals.Globals;
+import pl.orlikowski.carspottingBack.globals.Tools;
 
 import java.io.File;
 import java.io.IOException;

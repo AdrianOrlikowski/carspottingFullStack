@@ -37,6 +37,13 @@ public class AppUser implements UserDetails {
     private String email;
 
     private String password;
+
+    @Column(name="activation_token")
+    private String activationToken;
+
+    @Column(name="enabled")
+    private boolean enabled;
+
     @OneToMany(
             mappedBy = "appUser",
             orphanRemoval = true,
@@ -44,10 +51,13 @@ public class AppUser implements UserDetails {
     )
     private List<Spotting> spottings = new ArrayList<>();
 
-    public AppUser(String username, String email, String password) {
+
+    public AppUser(String username, String email, String password, boolean enabled, String activationToken) {
         this.username = username;
         this.email = email;
         this.password = password;
+        this.enabled=enabled;
+        this.activationToken = activationToken;
     }
 
     public AppUser() {}
@@ -67,6 +77,14 @@ public class AppUser implements UserDetails {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public void setPassword(String password) { this.password = password; }
+
+    public String getActivationToken() { return activationToken; }
+
+    public void setActivationToken(String activationToken) { this.activationToken = activationToken; }
+
+    public void setEnabled(boolean enabled) { this.enabled = enabled; }
 
     public List<Spotting> getSpottings() { return spottings; }
 
@@ -91,7 +109,7 @@ public class AppUser implements UserDetails {
         this.spottings.add(spot);
     }
     //Removing spottings
-    public void removePost(Spotting spot) {
+    public void removeSpot(Spotting spot) {
         this.spottings.remove(spot);
     }
 
@@ -108,6 +126,9 @@ public class AppUser implements UserDetails {
     @Override
     public String getUsername() { return username; }
 
+    @Override
+    public boolean isEnabled() { return enabled; }
+
     //Not implementing these security features
     @Override
     public boolean isAccountNonExpired() { return true; }
@@ -118,8 +139,6 @@ public class AppUser implements UserDetails {
     @Override
     public boolean isCredentialsNonExpired() { return true; }
 
-    @Override
-    public boolean isEnabled() { return true; }
 
 
 }

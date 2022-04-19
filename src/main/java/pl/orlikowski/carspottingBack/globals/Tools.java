@@ -1,4 +1,4 @@
-package pl.orlikowski.carspottingBack.tools;
+package pl.orlikowski.carspottingBack.globals;
 import org.apache.commons.imaging.Imaging;
 
 import org.apache.commons.imaging.formats.jpeg.JpegImageMetadata;

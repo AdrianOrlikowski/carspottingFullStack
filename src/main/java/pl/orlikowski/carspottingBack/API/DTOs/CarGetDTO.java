@@ -1,6 +1,6 @@
-package pl.orlikowski.carspottingBack.API;
+package pl.orlikowski.carspottingBack.API.DTOs;
 
-import pl.orlikowski.carspottingBack.tools.Tools;
+import pl.orlikowski.carspottingBack.globals.Tools;
 
 public class CarGetDTO {
     private Long carId;

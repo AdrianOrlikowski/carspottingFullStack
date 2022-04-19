@@ -1,6 +1,6 @@
 package pl.orlikowski.carspottingBack.businessClasses;
 
-import pl.orlikowski.carspottingBack.tools.Tools;
+import pl.orlikowski.carspottingBack.globals.Tools;
 
 import javax.persistence.*;
 import java.util.List;

@@ -1,7 +1,7 @@
-package pl.orlikowski.carspottingBack.API;
+package pl.orlikowski.carspottingBack.API.DTOs;
 
 import org.springframework.web.multipart.MultipartFile;
-import pl.orlikowski.carspottingBack.tools.Tools;
+import pl.orlikowski.carspottingBack.globals.Tools;
 
 import java.time.LocalDateTime;
 

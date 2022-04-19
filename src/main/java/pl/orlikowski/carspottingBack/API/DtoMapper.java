@@ -3,6 +3,8 @@ package pl.orlikowski.carspottingBack.API;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.orlikowski.carspottingBack.API.DTOs.CarGetDTO;
+import pl.orlikowski.carspottingBack.API.DTOs.SpottingGetDTO;
 import pl.orlikowski.carspottingBack.businessClasses.Car;
 import pl.orlikowski.carspottingBack.businessClasses.Spotting;
 
