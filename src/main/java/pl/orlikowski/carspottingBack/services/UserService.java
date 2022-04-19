@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.orlikowski.carspottingBack.businessClasses.AppUser;
 import pl.orlikowski.carspottingBack.globals.Globals;
@@ -18,11 +19,15 @@ public class UserService implements UserDetailsService{
 
     private final UserRepo userRepo;
     private final TokenGenerator tokenGenerator;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public UserService(UserRepo userRepo, TokenGenerator tokenGenerator ) {
+    public UserService(UserRepo userRepo,
+                       TokenGenerator tokenGenerator,
+                       BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepo = userRepo;
         this.tokenGenerator = tokenGenerator;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     public List<AppUser> getUsers() { return userRepo.findAll(); }
@@ -37,15 +42,19 @@ public class UserService implements UserDetailsService{
                 "user with  " + email + " address does not exist"));
     }
 
-    public AppUser addUser(AppUser newUser) {
-        if(userRepo.findUserByEmail(newUser.getEmail()).isPresent()) {
+    public AppUser addUser(String appUserUsername, String email, String password) {
+        if(userRepo.findUserByEmail(email).isPresent()) {
             throw new RuntimeException("There is already an account associated with this email.");
-        } else if(userRepo.findUserByEmail(newUser.getUsername()).isPresent()) {
+        } else if(userRepo.findUserByUsername(appUserUsername).isPresent()) {
             throw new RuntimeException("This username is already taken");
-        } else {
-            userRepo.save(newUser);
-            return newUser;
         }
+        //generating activation token
+        String token = tokenGenerator.generateToken(Globals.tokenSize);
+        //creating new user
+        AppUser newUser = new AppUser(appUserUsername, email,
+                bCryptPasswordEncoder.encode(password), false, token);
+        userRepo.save(newUser);
+        return newUser;
     }
 
     public AppUser activateUser(String token) {

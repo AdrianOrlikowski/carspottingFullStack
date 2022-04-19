@@ -9,21 +9,20 @@ import pl.orlikowski.carspottingBack.mailing.TokenGenerator;
 import pl.orlikowski.carspottingBack.services.UserService;
 import pl.orlikowski.carspottingBack.globals.Globals;
 
+
+//Controller handling user registration and activation.
+//Currently returns user entity as JSON - to be integrated with front
 @RestController
 @RequestMapping(path="users")
 public class UserController {
 
     private final UserService userService;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
-    private final TokenGenerator tokenGenerator;
     private final MailingService mailingService;
 
     @Autowired
     public UserController(UserService userService, BCryptPasswordEncoder bCryptPasswordEncoder,
                           TokenGenerator tokenGenerator, MailingService mailingService) {
         this.userService = userService;
-        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-        this.tokenGenerator = tokenGenerator;
         this.mailingService = mailingService;
     }
 
@@ -33,13 +32,8 @@ public class UserController {
                              @RequestParam("email") String email,
                              @RequestParam("password") String password) {
 
-        String token = tokenGenerator.generateToken(Globals.tokenSize);
-
-        AppUser newUser = new AppUser(appUserUsername, email,
-                bCryptPasswordEncoder.encode(password), false, token);
-        AppUser retUser = userService.addUser(newUser);
-        mailingService.sendActivationMail(email, token);
-
+        AppUser retUser = userService.addUser(appUserUsername, email, password);
+        mailingService.sendActivationMail(retUser.getEmail(), retUser.getActivationToken());
         return retUser;
     }
 
@@ -48,6 +42,7 @@ public class UserController {
         return userService.activateUser(token);
     }
 
+    @CrossOrigin
     @PostMapping(path="/resendtoken")
     public AppUser resendToken(@RequestParam("email") String email) {
         AppUser user =  userService.updateToken(email);
