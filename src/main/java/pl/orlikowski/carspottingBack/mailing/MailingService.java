@@ -28,7 +28,16 @@ public class MailingService {
         mailMessage.setText("Welcome to Carspotting Warsaw, " +
                 "please paste the link below into your browser to activate account:\n" +
                 Globals.activationLink + token);
+        mailSender.send(mailMessage);
+    }
 
+    public void sendResetPassword(String email, String password){
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        mailMessage.setFrom(Globals.mailFrom);
+        mailMessage.setTo(email);
+        mailMessage.setSubject("Password reset");
+        mailMessage.setText("Carspotting Warsaw: your password has been reset" +
+                "Your temporary password is:\n" + password);
         mailSender.send(mailMessage);
     }
 }

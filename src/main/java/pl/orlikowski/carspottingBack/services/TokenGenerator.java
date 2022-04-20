@@ -1,8 +1,7 @@
-package pl.orlikowski.carspottingBack.mailing;
+package pl.orlikowski.carspottingBack.services;
 
 import org.springframework.stereotype.Component;
 
-import java.nio.charset.Charset;
 import java.util.Random;
 
 @Component

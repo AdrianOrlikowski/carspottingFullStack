@@ -9,7 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import pl.orlikowski.carspottingBack.businessClasses.AppUser;
 import pl.orlikowski.carspottingBack.businessClasses.Car;
 import pl.orlikowski.carspottingBack.businessClasses.Spotting;
-import pl.orlikowski.carspottingBack.mailing.TokenGenerator;
+import pl.orlikowski.carspottingBack.services.TokenGenerator;
 import pl.orlikowski.carspottingBack.repositories.*;
 import pl.orlikowski.carspottingBack.services.*;
 import pl.orlikowski.carspottingBack.security.PassEncoder;

@@ -8,7 +8,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.orlikowski.carspottingBack.businessClasses.AppUser;
 import pl.orlikowski.carspottingBack.globals.Globals;
-import pl.orlikowski.carspottingBack.mailing.TokenGenerator;
 import pl.orlikowski.carspottingBack.repositories.*;
 
 import java.util.List;
@@ -77,6 +76,19 @@ public class UserService implements UserDetailsService{
         user.setActivationToken(tokenGenerator.generateToken(Globals.tokenSize));
         userRepo.save(user);
         return user;
+    }
+
+    public String resetPassword(String email) {
+        Optional<AppUser> userOpt = userRepo.findUserByEmail(email);
+        if(userOpt.isEmpty()) {
+            throw new RuntimeException("user with " + email + " address does not exist");
+        }
+        AppUser user = userOpt.get();
+        //we use tokenGenerator to generate random password
+        String newPass = tokenGenerator.generateToken(Globals.resetPassLength);
+        user.setPassword(bCryptPasswordEncoder.encode(newPass));
+        userRepo.save(user);
+        return newPass;
     }
 
     @Override
