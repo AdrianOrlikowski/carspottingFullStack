@@ -26,10 +26,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
-//    @Override
-//    public void configure(WebSecurity web) throws Exception {
-//        web.ignoring().antMatchers("/css/*");
-//    }
 
     //Na razie puszczamy wszystko
     @Override
@@ -44,9 +40,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/search").permitAll()
                     .antMatchers("/login").permitAll()
                     .antMatchers("/logout").permitAll()
+                    .antMatchers("/passreset").permitAll()
                     .antMatchers("/register").permitAll()
                     .antMatchers("/users/register").permitAll()
                     .antMatchers("/users/activate").permitAll()
+                    .antMatchers("/users/resetpassword").permitAll()
+                    .antMatchers("/users/resendtoken").permitAll()
                     .antMatchers("/css/*", "/js/*").permitAll()
                     .antMatchers("/data/spots").permitAll()
                     .antMatchers("/data/search").permitAll()
@@ -57,9 +56,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/search").permitAll()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/logout").permitAll()
+                .antMatchers("/passreset").permitAll()
                 .antMatchers("/register").permitAll()
                 .antMatchers("/users/register").permitAll()
                 .antMatchers("/users/activate").permitAll()
+                .antMatchers("/users/resetpassword").permitAll()
+                .antMatchers("/users/resendtoken").permitAll()
                 .antMatchers("/css/*", "/js/*").permitAll()
                 .antMatchers("/data/spots").permitAll()
                 .antMatchers("/data/search").permitAll()

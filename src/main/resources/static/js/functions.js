@@ -72,3 +72,4 @@ function deleteSpot(id) {
     //refresh page
     window.location.href = "http://localhost:8080/myspots"
 }
+

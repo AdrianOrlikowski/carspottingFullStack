@@ -31,6 +31,9 @@ public class FrontController {
     @GetMapping(path="/myspots")
     public String getMySPots() { return "myspots"; }
 
+    @GetMapping(path="/passreset")
+    public String getTestTemplate() { return "passreset"; }
+
 
 
 

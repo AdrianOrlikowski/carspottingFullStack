@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Carspotting Warsaw</title>
+
+    <link id="normalize"rel="stylesheet" href="css/normalize.css">
+    <link id="css" rel="stylesheet" href="css/design.css">
+
+</head>
+<body>
+    <div>
+        <div class="topbar">
+            <h1>Carspotting Warsaw</h1>
+            <p>Seen a unique/exotic car? Have a picture? Share it with other enthusiasts.</p>
+        </div>
+        <div class="menubar">
+            <a href="/">Spots</a>
+            <a href="/addspot">Add spot</a>
+            <a href="/search">Search</a>
+            <a href="/login">Login</a>
+            <a href="/logout">Logout</a>
+            <a href="/register">Register</a>
+            <a href="/myspots">My Spots</a>
+        </div>
+    </div>
+
+    <div class="footer">
+        <h2>Add spot</h2>
+    </div>
+
+    <div>
+        <form class="form">
+            <div class="formInput">
+                <input name="email" type="email" placeholder="Email" required>
+            </div>
+        </form>
+    </div>
+    <div>
+        <button class="button" id="resetPassword">Reset password</button>
+    </div>
+    <br>
+    <div>
+        <button class="button" id="resendToken">Resend activation token</button>
+    </div>
+
+    <script th:src="@{js/passreset.js}"></script>
+
+</body>
+
+<footer class="footer">
+    <p><small>created by AO, 2022</small><br>
+</footer>
+
+</html>

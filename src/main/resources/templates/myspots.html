@@ -13,33 +13,34 @@
 </head>
 
 <body>
-  <div class="topbar">
-    <h1>Carspotting Warsaw</h1>
-    <p>Seen a unique/exotic car? Have a picture? Share it with other enthusiasts.</p>
-  </div>
-  <div class="menubar">
-      <a th:href="@{/}">Spots</a>
-      <a th:href="@{/addspot}">Add spot</a>
-      <a th:href="@{/search}">Search</a>
-      <a th:href="@{/login}">Login</a>
-      <a th:href="@{/logout}">Logout</a>
-      <a th:href="@{/register}">Register</a>
-      <a th:href="@{/myspots}">My Spots</a>
-  </div>
+    <div class="topbar">
+        <h1>Carspotting Warsaw</h1>
+        <p>Seen a unique/exotic car? Have a picture? Share it with other enthusiasts.</p>
+    </div>
+    <div class="menubar">
+        <a href="/">Spots</a>
+        <a href="/addspot">Add spot</a>
+        <a href="/search">Search</a>
+        <a href="/login">Login</a>
+        <a href="/logout">Logout</a>
+        <a href="/register">Register</a>
+        <a href="/myspots">My Spots</a>
 
-  <div id="postArea">
+    </div>
+
+    <div id="postArea">
     <!--Here posts are inserted by JS code -->
-  </div>
+    </div>
 
-  <div id="siteEnd"></div>
+    <div id="siteEnd"></div>
 
-  <script th:src="@{js/functions.js}"></script>
-  <script th:src="@{js/myspots.js}"></script>
+    <script th:src="@{js/functions.js}"></script>
+    <script th:src="@{js/myspots.js}"></script>
 
 </body>
 
 <footer class="footer">
-  <p><small>created by AO, 2022</small><br>
+    <p><small>created by AO, 2022</small><br>
 </footer>
 
 </html>

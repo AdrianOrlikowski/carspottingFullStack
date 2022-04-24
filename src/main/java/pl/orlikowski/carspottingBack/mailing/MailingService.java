@@ -36,7 +36,7 @@ public class MailingService {
         mailMessage.setFrom(Globals.mailFrom);
         mailMessage.setTo(email);
         mailMessage.setSubject("Password reset");
-        mailMessage.setText("Carspotting Warsaw: your password has been reset" +
+        mailMessage.setText("Carspotting Warsaw: your password has been reset. " +
                 "Your temporary password is:\n" + password);
         mailSender.send(mailMessage);
     }
