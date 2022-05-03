@@ -6,10 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Entity(name = "AppUser")
 @Table(name = "app_user")
@@ -29,11 +26,13 @@ public class AppUser implements UserDetails {
     private Long userId;
     @Column(
             name = "username",
-            nullable = false)
+            nullable = false,
+            unique = true)
     private String username;
     @Column(
             name = "email",
-            nullable = false)
+            nullable = false,
+            unique = true)
     private String email;
 
     private String password;
@@ -51,12 +50,11 @@ public class AppUser implements UserDetails {
     )
     private List<Spotting> spottings = new ArrayList<>();
 
-
     public AppUser(String username, String email, String password, boolean enabled, String activationToken) {
-        this.username = username;
-        this.email = email;
+        this.username = username.toLowerCase();
+        this.email = email.toLowerCase();
         this.password = password;
-        this.enabled=enabled;
+        this.enabled = enabled;
         this.activationToken = activationToken;
     }
 
@@ -67,7 +65,7 @@ public class AppUser implements UserDetails {
     }
 
     public void setUsername(String username) {
-        this.username = username;
+        this.username = username.toLowerCase();
     }
 
     public String getEmail() {
@@ -75,7 +73,7 @@ public class AppUser implements UserDetails {
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.email = email.toLowerCase();
     }
 
     public void setPassword(String password) { this.password = password; }
@@ -99,10 +97,13 @@ public class AppUser implements UserDetails {
                 ", username='" + username + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
+                ", activationToken='" + activationToken + '\'' +
+                ", enabled=" + enabled +
                 '}';
     }
 
     /////////////////////////////////////////////////////////////////////////
+    /*
     //Adding spotings
     public void addSpot(Car car) {
         Spotting spot = new Spotting(this, car, LocalDateTime.now());
@@ -112,7 +113,7 @@ public class AppUser implements UserDetails {
     public void removeSpot(Spotting spot) {
         this.spottings.remove(spot);
     }
-
+    */
     /////////////////////////////////////////////////////////////////////////
     //Security stuff
     @Override

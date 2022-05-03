@@ -1,6 +1,6 @@
 package pl.orlikowski.carspottingBack;
 
-import org.modelmapper.ModelMapper;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -26,8 +26,6 @@ public class CarspottingApplication {
 		SpringApplication.run(CarspottingApplication.class, args);
 	}
 
-	@Bean
-	ModelMapper modelMapper() { return new ModelMapper();}
 
 	@Bean
 	CommandLineRunner commandLineRunner(SpottingRepo spottingRepo, CarRepo carRepo, UserRepo userRepo, PassEncoder passEncoder,
@@ -41,29 +39,31 @@ public class CarspottingApplication {
 			//Test user
 			AppUser user1 = new AppUser("adrian","adrian@gmail.com",
 					encoder.encode("adrian"),
-					true, "dupa");
+					true, "adrian");
 
 			userRepo.save(user1);
+
+			AppUser user2 = new AppUser("orka","orka@gmail.com",
+					encoder.encode("orka"),
+					true, "orka");
+
+			userRepo.save(user2);
 
 			//Test cars
 			Car car1 = new Car("Ferrari", "Testarossa");
 			Car car2 = new Car("Jaguar", "E-Type");
 			Car car3 = new Car("Mazda", "MX-5");
 			carRepo.saveAll(List.of(car1, car2, car3));
-			//Test spotting
+			//Test spottings
 			Spotting spot1 = new Spotting(user1, car1, LocalDateTime.now(),
 					Globals.picPath + "1.jpeg");
 			Spotting spot2 = new Spotting(user1, car2, LocalDateTime.now(),
 					Globals.picPath + "2.jpeg");
-			Spotting spot3 = new Spotting(user1, car3, LocalDateTime.now(),
+			Spotting spot3 = new Spotting(user2, car3, LocalDateTime.now(),
 					Globals.picPath + "3.jpeg");
-			spottingRepo.saveAll(List.of(spot1, spot2, spot3));
-
-			List<Spotting> search1 = spottingRepo.findAllByAppUserUsername("adrian");
-
-			for(Spotting spot : search1) {
-				System.out.println(spot);
-			}
+			Spotting spot4 = new Spotting(user1, car3, LocalDateTime.now(),
+					Globals.picPath + "4.jpeg");
+			spottingRepo.saveAll(List.of(spot1, spot2, spot3, spot4));
 
 		};
 

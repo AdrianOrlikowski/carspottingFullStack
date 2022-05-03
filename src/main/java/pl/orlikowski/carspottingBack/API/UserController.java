@@ -1,6 +1,8 @@
 package pl.orlikowski.carspottingBack.API;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import pl.orlikowski.carspottingBack.businessClasses.AppUser;
 import pl.orlikowski.carspottingBack.mailing.MailingService;
@@ -53,6 +55,15 @@ public class UserController {
         String newPass = userService.resetPassword(email);
         mailingService.sendResetPassword(email, newPass);
         return "Your password has been reset. New password sent to: " + email;
+    }
+
+    @CrossOrigin
+    @DeleteMapping(path="/deleteaccount")
+    public String deleteUser() {
+       Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+       String username = authentication.getName();
+       AppUser deletedUser = userService.deleteUser(username);
+       return "User " + username + " deleted.";
     }
 
 

@@ -49,7 +49,7 @@ public class SpottingService {
     public List<Car> getAllCars() { return carRepo.findAll(); }
 
     public Spotting addSpot(SpottingPostDTO postDTO) throws RuntimeException {
-        Optional<AppUser> optUser = userRepo.findUserByUsername(postDTO.getAppUserUsername());
+        Optional<AppUser> optUser = userRepo.findUserByUsernameIgnoreCase(postDTO.getAppUserUsername());
         if(optUser.isEmpty()) {
             throw new SpotAddException("only registered users can add spottings");
         } else {

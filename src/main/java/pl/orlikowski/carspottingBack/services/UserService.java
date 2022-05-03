@@ -7,6 +7,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.orlikowski.carspottingBack.businessClasses.AppUser;
+import pl.orlikowski.carspottingBack.businessClasses.Car;
+import pl.orlikowski.carspottingBack.businessClasses.Spotting;
 import pl.orlikowski.carspottingBack.globals.Globals;
 import pl.orlikowski.carspottingBack.repositories.*;
 
@@ -17,16 +19,22 @@ import java.util.Optional;
 public class UserService implements UserDetailsService{
 
     private final UserRepo userRepo;
+    private final CarRepo carRepo;
+    private final SpottingRepo spottingRepo;
     private final TokenGenerator tokenGenerator;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
     public UserService(UserRepo userRepo,
+                       CarRepo carRepo,
+                       SpottingRepo spottingRepo,
                        TokenGenerator tokenGenerator,
                        BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepo = userRepo;
         this.tokenGenerator = tokenGenerator;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.carRepo = carRepo;
+        this.spottingRepo = spottingRepo;
     }
 
     public List<AppUser> getUsers() { return userRepo.findAll(); }
@@ -37,14 +45,14 @@ public class UserService implements UserDetailsService{
     }
 
     public AppUser getUserByEmail(String email) {
-        return userRepo.findUserByEmail(email).orElseThrow(() -> new UsernameNotFoundException(
+        return userRepo.findUserByEmailIgnoreCase(email).orElseThrow(() -> new UsernameNotFoundException(
                 "user with  " + email + " address does not exist"));
     }
 
     public AppUser addUser(String appUserUsername, String email, String password) {
-        if(userRepo.findUserByEmail(email).isPresent()) {
+        if(userRepo.findUserByEmailIgnoreCase(email).isPresent()) {
             throw new RuntimeException("There is already an account associated with this email.");
-        } else if(userRepo.findUserByUsername(appUserUsername).isPresent()) {
+        } else if(userRepo.findUserByUsernameIgnoreCase(appUserUsername).isPresent()) {
             throw new RuntimeException("This username is already taken");
         }
         //generating activation token
@@ -68,7 +76,7 @@ public class UserService implements UserDetailsService{
     }
 
     public AppUser updateToken(String email) {
-        Optional<AppUser> userOpt = userRepo.findUserByEmail(email);
+        Optional<AppUser> userOpt = userRepo.findUserByEmailIgnoreCase(email);
         if(userOpt.isEmpty()){
             throw new RuntimeException("user with " + email + " address does not exist");
         }
@@ -79,7 +87,7 @@ public class UserService implements UserDetailsService{
     }
 
     public String resetPassword(String email) {
-        Optional<AppUser> userOpt = userRepo.findUserByEmail(email);
+        Optional<AppUser> userOpt = userRepo.findUserByEmailIgnoreCase(email);
         if(userOpt.isEmpty()) {
             throw new RuntimeException("user with " + email + " address does not exist");
         }
@@ -91,9 +99,29 @@ public class UserService implements UserDetailsService{
         return newPass;
     }
 
+    public AppUser deleteUser(String username) {
+        Optional<AppUser> userOpt = userRepo.findUserByUsernameIgnoreCase(username);
+        if(userOpt.isEmpty()) {
+            throw new RuntimeException("user with username:" + username + " does not exist");
+        }
+        AppUser userDeleted = userOpt.get();
+        //getting all the cars spotted by the user we want to delete
+        List<Car> cars = spottingRepo.findAllByAppUserUsername(username)
+                .stream().map(Spotting::getCar).toList();
+
+        userRepo.deleteAppUserByUsername(username);
+
+        //After deleting user all his spottings are deleted automatically.
+        //After this we check for cars with no spottings and delete them
+        for(Car car: cars) {
+            if (car.getSpottings().isEmpty()) carRepo.delete(car);
+        }
+        return userDeleted;
+    }
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepo.findUserByUsername(username)
+        return userRepo.findUserByUsernameIgnoreCase(username)
                 .orElseThrow(() -> new UsernameNotFoundException("user with " + username + " does not exist"));
     }
 }
